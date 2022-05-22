@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: social app
+  description: First social application - Deepz
+  version: 0.1.1
+
+servers:
+  - url: http://localhost:5000/api/
+    description: localhost version of the app
+  - url: https://localhost:5000/api/
+    description: it's just dummy api url doesn't work
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /instagram:
+    get:
+      summary: returns instagram profile informations
+      responses:
+        '200': #status code
+         description: returns an Object
+         content:
+          application/json:
+            schema:
+              type: Object
+              properties:
+                username:
+                  type: string
+                followers:
+                  type: string
+                following:
+                  type: string
+    post:
+      summary: returns instagram profile informations
+      responses:
+        '200': #status code
+         description: returns an Object
+         content:
+          application/json:
+            schema:
+              type: Object
+              properties:
+                username:
+                  type: string
+                followers:
+                  type: string
+                following:
+                  type: string                       
+  /{token}:
+    get:
+      summary: returns whatever parameter we pass
+      parameters:
+        - name: token
+          in: path
+          default: 10
+          schema:
+            type: string
+      responses:
+        '200': #status code
+         description: returns an Object
+         content:
+          application/json:
+            schema:
+              type: Object
+              properties:
+                token:
+                  type: string

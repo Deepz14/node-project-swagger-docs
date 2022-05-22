@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const yaml = require('yamljs');
+const swaggerDocument = yaml.load('./swagger.yaml');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -13,7 +14,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/instagram/', (req, res) => {
     const response = {
-        username: 'deepz_grame',
+        username: 'deepz_gram',
         followers: 250,
         following: 600
     }
@@ -28,6 +29,13 @@ app.get('/api/facebook/', (req, res) => {
     }
 
     res.status(200).json(response);
+})
+
+app.get('/api/:token', (req, res) => {
+    const getToken = req.params.token
+    res.status(200).json({
+        token: getToken
+    })
 })
 
 app.listen(PORT, () => {
