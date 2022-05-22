@@ -235,3 +235,28 @@ paths:
           description: Bad request
         '500':
           description: Internal server error 
+
+  /courseupload:
+    post:
+      tags:
+        - string
+      summary: Uploading course image
+      parameters:
+        - in: header
+          name: auth
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string  
+                  format: binary
+      responses:
+        '200':
+          description: success
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error 

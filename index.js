@@ -3,9 +3,11 @@ const app = express();
 const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
 const swaggerDocument = yaml.load('./swagger.yaml');
+const fileUpload = require('express-fileupload');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
+app.use(fileUpload());
 
 const PORT = process.env.PORT || 5000;
 
@@ -77,6 +79,19 @@ app.get('/api/coursesquery/', (req, res) => {
     let device = req.query.device
 
     res.status(200).send({location, device})
+})
+
+app.post('/api/courseupload/', async(req, res) => {
+    console.log(req.headers);
+    let file = req.files.file;
+    let path = __dirname + "/images/" + Date.now() + ".jpg"
+
+    try{
+        await file.mv(path)
+        res.send(true)
+    }catch(err){
+        res.send(false)
+    }
 })
 
 app.get('/api/:token', (req, res) => {
