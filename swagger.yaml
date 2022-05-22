@@ -200,3 +200,38 @@ paths:
           description: Bad request
         '500':
           description: Internal server error
+
+  /coursesquery:
+    get:
+      tags:
+        - Object
+      summary: retrieve the query object
+      parameters:
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [chennai, erode, cbe]
+        - name: device
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [web, mobile]
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                  device:
+                    type: string  
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error 

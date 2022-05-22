@@ -72,6 +72,13 @@ app.get('/api/mycourse/:courseId', (req, res) => {
     res.status(200).send(findCourse);
 })
 
+app.get('/api/coursesquery/', (req, res) => {
+    let location = req.query.location
+    let device = req.query.device
+
+    res.status(200).send({location, device})
+})
+
 app.get('/api/:token', (req, res) => {
     const getToken = req.params.token
     res.status(200).send(getToken)
