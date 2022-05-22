@@ -11,7 +11,8 @@ servers:
       protocol:
         enum:
           - http
-          - https  
+          - https
+        default: http    
 
 components:
   securitySchemes:
@@ -29,14 +30,16 @@ components:
 paths:
   /instagram:
     get:
+      tags:
+        - Object
       summary: returns instagram profile informations
       responses:
         '200': #status code
-         description: returns an Object
+         description: success
          content:
           application/json:
             schema:
-              type: Object
+              type: object
               properties:
                 username:
                   type: string
@@ -44,24 +47,31 @@ paths:
                   type: string
                 following:
                   type: string
+        '400':
+          description: Bad request
+        '500':
+          description: 'Internal server error'            
     post:
       summary: returns instagram profile informations
       responses:
         '200': #status code
-         description: returns an Object
+         description: success
          content:
           application/json:
             schema:
-              type: Object
+              type: object
               properties:
                 username:
                   type: string
                 followers:
                   type: string
                 following:
-                  type: string                       
+                  type: string
+
   /{token}:
     get:
+      tags:
+        - String
       summary: returns whatever parameter we pass
       parameters:
         - name: token
@@ -71,11 +81,122 @@ paths:
             type: string
       responses:
         '200': #status code
-         description: returns an Object
+         description: success
          content:
           application/json:
             schema:
-              type: Object
+              type: string
+              example: "my string"
+        '400': #status code
+         description: Bad request
+        '500': #status code
+         description: Internal server error
+
+  /courses:
+    get:
+      tags:
+        - Array
+      summary: Returns list of all courses
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    price:
+                      type: string    
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Array
+      summary: Add a new course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
               properties:
-                token:
-                  type: string
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  price:
+                    type: string  
+      responses:
+        '200':
+          description: created successfully
+          content:
+            application/json:
+              schema:
+                  type: boolean
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /courseObject:
+    get:
+      tags:
+        - Object
+      summary: Returns list of all courses
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  price:
+                    type: string    
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error    
+
+  /mycourse/{courseId}:
+    get:
+      tags:
+        - Object
+      summary: Returns course using parameter courseId
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          default: 22
+          schema:
+            type: string      
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  price:
+                    type: string    
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
